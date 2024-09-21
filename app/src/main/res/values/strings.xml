@@ -3,4 +3,6 @@
     <string name="vacation_app">Vacation App</string>
     <string name="enter_button">Enter</string>
     <string name="excursion_date">Excursion date</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="share_vacation">Share Vacation</string>
 </resources>

@@ -10,10 +10,10 @@
         android:id="@+id/vacation_delete"
         />
     <item
-        android:title="Share Vacation"
+        android:title="@string/share_vacation"
         android:id="@+id/vacation_share"
     />
-    <item android:title="Set Alarm"
+    <item android:title="@string/set_alarm"
         android:id="@+id/set_alarm"
         />
 
