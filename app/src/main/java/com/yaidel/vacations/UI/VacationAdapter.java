@@ -1,7 +1,5 @@
 package com.yaidel.vacations.UI;
 
-// NOTE.. Adapter
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yaidel.vacations.R;
 import com.yaidel.vacations.entity.Vacation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // NOTE.. Adapters put stuff in the recycler view
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
 
     private List<Vacation> mVacations;
+    private List<Vacation> mVacationsFull;  // Copy of the full list for filtering
     private final Context context;
     private final LayoutInflater mInflater;
-
 
     public VacationAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -58,7 +57,6 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         }
     }
 
-
     @NonNull
     @Override
     public VacationAdapter.VacationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -72,11 +70,9 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             Vacation current = mVacations.get(position);
             String title = current.getTitle();
             holder.vacationItemView.setText(title);
-            }
-        else {
+        } else {
             String noVacation = "No Vacation";
             holder.vacationItemView.setText(noVacation);
-
         }
     }
 
@@ -84,15 +80,31 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
     public int getItemCount() {
         if (mVacations != null) {
             return mVacations.size();
+        } else {
+            return 0;
         }
-        else return 0;
     }
-
 
     public void SetVacation(List<Vacation> vacations) {
         mVacations = vacations;
+        mVacationsFull = new ArrayList<>(vacations);  // Keep a full copy of the original list for filtering
         notifyDataSetChanged();
     }
 
+    // Method to filter the list based on search query
+    public void filter(String query) {
+        if (query == null || query.isEmpty()) {
+            mVacations = new ArrayList<>(mVacationsFull);  // Reset to full list when query is empty
+        } else {
+            List<Vacation> filteredList = new ArrayList<>();
+            for (Vacation vacation : mVacationsFull) {
+                if (vacation.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(vacation);  // Add matching vacations to the filtered list
+                }
+            }
+            mVacations = filteredList;  // Update the list to show filtered results
+        }
+        notifyDataSetChanged();  // Refresh the RecyclerView with the new data
+    }
 
-}//end class
+}
