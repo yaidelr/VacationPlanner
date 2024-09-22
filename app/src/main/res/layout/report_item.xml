@@ -1,0 +1,44 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Column for Vacation Title -->
+    <TextView
+        android:id="@+id/reportTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Vacation Title"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <!-- Column for Start Date -->
+    <TextView
+        android:id="@+id/reportStartDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Start Date"
+        android:textSize="16sp"/>
+
+    <!-- Column for End Date -->
+    <TextView
+        android:id="@+id/reportEndDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="End Date"
+        android:textSize="16sp"/>
+
+    <!-- Column for Date-Time Stamp -->
+    <TextView
+        android:id="@+id/reportDateTimeStamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Timestamp"
+        android:textSize="16sp"/>
+</LinearLayout>

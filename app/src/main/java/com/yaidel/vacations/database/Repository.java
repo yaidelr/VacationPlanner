@@ -164,6 +164,25 @@ public class Repository {
     }
 
 
+    public List<Vacation> getVacationsByDateRange(String startDate, String endDate) {
+        final List<Vacation>[] vacationList = new List[1];
+        databaseWriteExecutor.execute(() -> {
+            vacationList[0] = mvacationDao.getVacationsByDateRange(startDate, endDate);
+        });
+
+        // Add a small delay to give time for the database operation to complete
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return vacationList[0];
+    }
+
+
+    
+
 }//end class
 
 

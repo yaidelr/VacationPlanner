@@ -30,4 +30,7 @@ public interface VacationDAO {
     @Query("SELECT * FROM vacation_table WHERE id = :vacationId LIMIT 1")
     Vacation getVacationById (int vacationId);
 
+    @Query("SELECT * FROM vacation_table WHERE startDate >= :startDate AND endDate <= :endDate")
+    List<Vacation> getVacationsByDateRange(String startDate, String endDate);
+
 }
