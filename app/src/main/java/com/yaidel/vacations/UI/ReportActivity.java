@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.yaidel.vacations.entity.Vacation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,24 +86,42 @@ public class ReportActivity extends AppCompatActivity {
 
     //generate report based on selected start and end dates
     private void generateReport() {
-        String startDate = startDateButton.getText().toString();
-        String endDate = endDateButton.getText().toString();
+        String startDateStr = startDateButton.getText().toString();
+        String endDateStr = endDateButton.getText().toString();
 
-        // Log the selected dates
-        System.out.println("Start Date: " + startDate);
-        System.out.println("End Date: " + endDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy", Locale.US);
 
-        //get vacations within the date range
-        List<Vacation> reportData = repository.getVacationsByDateRange(startDate, endDate);
+        try {
+            // Parse start and end dates
+            Date startDate = sdf.parse(startDateStr);
+            Date endDate = sdf.parse(endDateStr);
 
-        // Display the report in the RecyclerView
-        System.out.println("reportData test: " + reportData);
-        if (reportData != null && !reportData.isEmpty()) {
-            reportAdapter = new ReportAdapter(this);
-            reportAdapter.setReportData(reportData);
-            reportRecyclerView.setAdapter(reportAdapter);
-        } else {
-            System.out.println("No data found for the selected date range.");
+            // Check if the end date is before the start date
+            if (endDate.before(startDate)) {
+                System.out.println("Error: End date cannot be before start date.");
+                // Show error message (You can use a Toast, Dialog, or TextView)
+                Toast.makeText(this, "End date cannot be before start date.", Toast.LENGTH_SHORT).show();
+                return; // Exit the method without generating the report
+            }
+
+            // Fetch vacations within the selected date range
+            List<Vacation> reportData = repository.getVacationsByDateRange(startDateStr, endDateStr);
+
+            // Display the report in the RecyclerView
+            System.out.println("reportData test: " + reportData);
+            if (reportData != null && !reportData.isEmpty()) {
+                reportAdapter = new ReportAdapter(this);
+                reportAdapter.setReportData(reportData);
+                reportRecyclerView.setAdapter(reportAdapter);
+            } else {
+                System.out.println("No data found for the selected date range.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle any parsing errors
+            Toast.makeText(this, "Invalid date format.", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
