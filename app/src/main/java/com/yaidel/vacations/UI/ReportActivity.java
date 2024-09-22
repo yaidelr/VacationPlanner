@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yaidel.vacations.R;
-import com.yaidel.vacations.UI.ReportAdapter;
 import com.yaidel.vacations.database.Repository;
 import com.yaidel.vacations.entity.Vacation;
 
